@@ -7,6 +7,8 @@ use sdl2::rect::Rect;
 use sdl2::render::WindowCanvas;
 use std::time::Duration;
 
+use coolor;
+
 pub fn draw_mandel(
     canvas: &mut WindowCanvas,
     width: u32,
@@ -36,13 +38,11 @@ pub fn draw_mandel(
                 n += 1;
             }
 
-            if n == max_it {
-                n = 255
-            }
+            let n = n as f32 / max_it as f32;
 
-            let n = n as u8;
+            let color = coolor::Hsl::new(163.0, 1.0, n).to_rgb();
 
-            canvas.set_draw_color(Color::RGB(n, n, n));
+            canvas.set_draw_color(Color::RGB(color.r , color.g , color.b ));
             canvas.fill_rect(Rect::new(x as i32, y as i32, 1, 1));
         }
     }
